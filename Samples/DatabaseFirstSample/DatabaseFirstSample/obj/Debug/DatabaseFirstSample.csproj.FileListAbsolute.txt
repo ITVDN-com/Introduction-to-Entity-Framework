@@ -1,0 +1,8 @@
+C:\Users\David\Desktop\EF Video\Samples\DatabaseFirstSample\DatabaseFirstSample\bin\Debug\DatabaseFirstSample.exe.config
+C:\Users\David\Desktop\EF Video\Samples\DatabaseFirstSample\DatabaseFirstSample\bin\Debug\DatabaseFirstSample.exe
+C:\Users\David\Desktop\EF Video\Samples\DatabaseFirstSample\DatabaseFirstSample\bin\Debug\DatabaseFirstSample.pdb
+C:\Users\David\Desktop\EF Video\Samples\DatabaseFirstSample\DatabaseFirstSample\bin\Debug\EntityFramework.dll
+C:\Users\David\Desktop\EF Video\Samples\DatabaseFirstSample\DatabaseFirstSample\bin\Debug\EntityFramework.xml
+C:\Users\David\Desktop\EF Video\Samples\DatabaseFirstSample\DatabaseFirstSample\obj\Debug\DatabaseFirstSample.csprojResolveAssemblyReference.cache
+C:\Users\David\Desktop\EF Video\Samples\DatabaseFirstSample\DatabaseFirstSample\obj\Debug\DatabaseFirstSample.exe
+C:\Users\David\Desktop\EF Video\Samples\DatabaseFirstSample\DatabaseFirstSample\obj\Debug\DatabaseFirstSample.pdb

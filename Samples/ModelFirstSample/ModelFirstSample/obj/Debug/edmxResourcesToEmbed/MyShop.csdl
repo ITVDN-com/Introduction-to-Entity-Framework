@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MyShop" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="MyShopContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customers" EntityType="MyShop.Customer" />
+    <EntitySet Name="OrderSet" EntityType="MyShop.Order" />
+    <AssociationSet Name="CustomerOrder" Association="MyShop.CustomerOrder">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Order" EntitySet="OrderSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CusomerId" />
+    </Key>
+    <Property Type="Int32" Name="CusomerId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" Unicode="true" MaxLength="20" FixedLength="false" />
+    <Property Type="String" Name="Phone" Nullable="true" Unicode="false" MaxLength="10" FixedLength="true" />
+    <NavigationProperty Name="Order" Relationship="MyShop.CustomerOrder" FromRole="Customer" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Type="Int32" Name="OrderId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="DateTime" Name="OrderDate" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="MyShop.CustomerOrder" FromRole="Order" ToRole="Customer" />
+    <Property Type="Int32" Name="CustomerCusomerId" Nullable="false" />
+  </EntityType>
+  <Association Name="CustomerOrder">
+    <End Type="MyShop.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="MyShop.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CusomerId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomerCusomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

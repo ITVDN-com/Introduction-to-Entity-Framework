@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MyShop.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MyShopStoreContainer">
+    <EntitySet Name="Customers" EntityType="MyShop.Store.Customers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderSet" EntityType="MyShop.Store.OrderSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CustomerOrder" Association="MyShop.Store.CustomerOrder">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Order" EntitySet="OrderSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="CusomerId" />
+    </Key>
+    <Property Name="CusomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="Phone" Type="char" Nullable="true" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="OrderSet">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderDate" Type="datetime" Nullable="false" />
+    <Property Name="CustomerCusomerId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CustomerOrder">
+    <End Role="Customer" Type="MyShop.Store.Customers" Multiplicity="1" />
+    <End Role="Order" Type="MyShop.Store.OrderSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CusomerId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomerCusomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

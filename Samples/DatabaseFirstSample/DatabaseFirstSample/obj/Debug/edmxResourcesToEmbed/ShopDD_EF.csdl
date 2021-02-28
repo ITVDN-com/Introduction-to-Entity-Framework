@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShopDB_EFModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ShopDB_EFEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Customers" EntityType="ShopDB_EFModel.Customer" />
+    <EntitySet Name="Employees" EntityType="ShopDB_EFModel.Employee" />
+    <EntitySet Name="OrderDetails" EntityType="ShopDB_EFModel.OrderDetail" />
+    <EntitySet Name="Orders" EntityType="ShopDB_EFModel.Order" />
+    <EntitySet Name="Products" EntityType="ShopDB_EFModel.Product" />
+    <AssociationSet Name="FK_Orders_Customers" Association="ShopDB_EFModel.FK_Orders_Customers">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employees_Employees" Association="ShopDB_EFModel.FK_Employees_Employees">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="Employees1" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Employees" Association="ShopDB_EFModel.FK_Orders_Employees">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetails_Orders" Association="ShopDB_EFModel.FK_OrderDetails_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetails_Products" Association="ShopDB_EFModel.FK_OrderDetails_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerNo" />
+    </Key>
+    <Property Name="CustomerNo" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="FName" Type="String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="LName" Type="String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="MName" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Address1" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Address2" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="City" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="true" />
+    <Property Name="DateInSystem" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Orders" Relationship="ShopDB_EFModel.FK_Orders_Customers" FromRole="Customers" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+    <Property Name="FName" Type="String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="LName" Type="String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="MName" Type="String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Salary" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="PriorSalary" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="HireDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TerminationDate" Type="DateTime" Precision="0" />
+    <Property Name="ManagerEmpID" Type="Int32" />
+    <NavigationProperty Name="Employees1" Relationship="ShopDB_EFModel.FK_Employees_Employees" FromRole="Employees" ToRole="Employees1" />
+    <NavigationProperty Name="Employee1" Relationship="ShopDB_EFModel.FK_Employees_Employees" FromRole="Employees1" ToRole="Employees" />
+    <NavigationProperty Name="Orders" Relationship="ShopDB_EFModel.FK_Orders_Employees" FromRole="Employees" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="OrderID" />
+      <PropertyRef Name="LineItem" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
+    <Property Name="LineItem" Type="Int32" Nullable="false" />
+    <Property Name="ProdID" Type="Int32" />
+    <Property Name="Qty" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" p1:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Order" Relationship="ShopDB_EFModel.FK_OrderDetails_Orders" FromRole="OrderDetails" ToRole="Orders" />
+    <NavigationProperty Name="Product" Relationship="ShopDB_EFModel.FK_OrderDetails_Products" FromRole="OrderDetails" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerNo" Type="Int32" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EmployeeID" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="ShopDB_EFModel.FK_Orders_Customers" FromRole="Orders" ToRole="Customers" />
+    <NavigationProperty Name="Employee" Relationship="ShopDB_EFModel.FK_Orders_Employees" FromRole="Orders" ToRole="Employees" />
+    <NavigationProperty Name="OrderDetails" Relationship="ShopDB_EFModel.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProdID" />
+    </Key>
+    <Property Name="ProdID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Weight" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="OrderDetails" Relationship="ShopDB_EFModel.FK_OrderDetails_Products" FromRole="Products" ToRole="OrderDetails" />
+  </EntityType>
+  <Association Name="FK_Orders_Customers">
+    <End Role="Customers" Type="ShopDB_EFModel.Customer" Multiplicity="0..1" />
+    <End Role="Orders" Type="ShopDB_EFModel.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerNo" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="CustomerNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employees_Employees">
+    <End Role="Employees" Type="ShopDB_EFModel.Employee" Multiplicity="0..1" />
+    <End Role="Employees1" Type="ShopDB_EFModel.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="Employees1">
+        <PropertyRef Name="ManagerEmpID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Employees">
+    <End Role="Employees" Type="ShopDB_EFModel.Employee" Multiplicity="0..1" />
+    <End Role="Orders" Type="ShopDB_EFModel.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetails_Orders">
+    <End Role="Orders" Type="ShopDB_EFModel.Order" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OrderDetails" Type="ShopDB_EFModel.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetails_Products">
+    <End Role="Products" Type="ShopDB_EFModel.Product" Multiplicity="0..1" />
+    <End Role="OrderDetails" Type="ShopDB_EFModel.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProdID" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="ProdID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

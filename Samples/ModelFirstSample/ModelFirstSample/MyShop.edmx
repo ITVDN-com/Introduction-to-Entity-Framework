@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MyShop.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MyShopStoreContainer">
+    <EntitySet Name="Customers" EntityType="MyShop.Store.Customers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderSet" EntityType="MyShop.Store.OrderSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductSet" EntityType="MyShop.Store.ProductSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CustomerOrder" Association="MyShop.Store.CustomerOrder">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Order" EntitySet="OrderSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProductOrder" Association="MyShop.Store.ProductOrder">
+      <End Role="Product" EntitySet="ProductSet" />
+      <End Role="Order" EntitySet="OrderSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="CusomerId" />
+    </Key>
+    <Property Name="CusomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="Phone" Type="char" Nullable="true" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="OrderSet">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderDate" Type="datetime" Nullable="false" />
+    <Property Name="CustomerCusomerId" Type="int" Nullable="false" />
+    <Property Name="Product_ProductId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductSet">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="25" />
+  </EntityType>
+  <Association Name="CustomerOrder">
+    <End Role="Customer" Type="MyShop.Store.Customers" Multiplicity="1" />
+    <End Role="Order" Type="MyShop.Store.OrderSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CusomerId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomerCusomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductOrder">
+    <End Role="Product" Type="MyShop.Store.ProductSet" Multiplicity="1" />
+    <End Role="Order" Type="MyShop.Store.OrderSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Product_ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MyShop" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="MyShopContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="MyShop.Customer" />
+          <EntitySet Name="OrderSet" EntityType="MyShop.Order" />
+          <AssociationSet Name="CustomerOrder" Association="MyShop.CustomerOrder">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="OrderSet" />
+          </AssociationSet>
+          <EntitySet Name="ProductSet" EntityType="MyShop.Product" />
+          <AssociationSet Name="ProductOrder" Association="MyShop.ProductOrder">
+            <End Role="Product" EntitySet="ProductSet" />
+            <End Role="Order" EntitySet="OrderSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CusomerId" />
+          </Key>
+          <Property Type="Int32" Name="CusomerId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" Unicode="true" MaxLength="20" FixedLength="false" />
+          <Property Type="String" Name="Phone" Nullable="true" Unicode="false" MaxLength="10" FixedLength="true" />
+          <NavigationProperty Name="Order" Relationship="MyShop.CustomerOrder" FromRole="Customer" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Type="Int32" Name="OrderId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="OrderDate" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="MyShop.CustomerOrder" FromRole="Order" ToRole="Customer" />
+          <Property Type="Int32" Name="CustomerCusomerId" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="MyShop.ProductOrder" FromRole="Order" ToRole="Product" />
+        </EntityType>
+        <Association Name="CustomerOrder">
+          <End Type="MyShop.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="MyShop.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CusomerId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerCusomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Type="Int32" Name="ProductId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Description" Nullable="false" Unicode="true" MaxLength="25" FixedLength="false" />
+          <NavigationProperty Name="Order" Relationship="MyShop.ProductOrder" FromRole="Product" ToRole="Order" />
+        </EntityType>
+        <Association Name="ProductOrder">
+          <End Type="MyShop.Product" Role="Product" Multiplicity="1" />
+          <End Type="MyShop.Order" Role="Order" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MyShopStoreContainer" CdmEntityContainer="MyShopContainer">
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="IsTypeOf(MyShop.Customer)">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="CusomerId" ColumnName="CusomerId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MyShop.Order)">
+        <MappingFragment StoreEntitySet="OrderSet">
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="CustomerCusomerId" ColumnName="CustomerCusomerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MyShop.Product)">
+        <MappingFragment StoreEntitySet="ProductSet">
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ProductOrder" TypeName="MyShop.ProductOrder" StoreEntitySet="OrderSet">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="ProductId" ColumnName="Product_ProductId" />
+      </EndProperty>
+      <EndProperty Name="Order">
+        <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

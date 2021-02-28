@@ -1,0 +1,8 @@
+C:\Users\David\Desktop\EF Video\Samples\ModelFirstSample\ModelFirstSample\bin\Debug\ModelFirstSample.exe.config
+C:\Users\David\Desktop\EF Video\Samples\ModelFirstSample\ModelFirstSample\bin\Debug\ModelFirstSample.exe
+C:\Users\David\Desktop\EF Video\Samples\ModelFirstSample\ModelFirstSample\bin\Debug\ModelFirstSample.pdb
+C:\Users\David\Desktop\EF Video\Samples\ModelFirstSample\ModelFirstSample\bin\Debug\EntityFramework.dll
+C:\Users\David\Desktop\EF Video\Samples\ModelFirstSample\ModelFirstSample\bin\Debug\EntityFramework.xml
+C:\Users\David\Desktop\EF Video\Samples\ModelFirstSample\ModelFirstSample\obj\Debug\ModelFirstSample.csprojResolveAssemblyReference.cache
+C:\Users\David\Desktop\EF Video\Samples\ModelFirstSample\ModelFirstSample\obj\Debug\ModelFirstSample.exe
+C:\Users\David\Desktop\EF Video\Samples\ModelFirstSample\ModelFirstSample\obj\Debug\ModelFirstSample.pdb
